@@ -18,7 +18,7 @@ passport.use(new LocalStrategy({usernameField:'email'}, async (email,password, c
         return callback(null,false)
     }
 
-    const saltBuffer = user.salt.saltBuffer
+    const saltBuffer = user.salt.buffer
 
     crypto.pbkdf2(password, saltBuffer, 310000 , 16 , 'sha256',( err , hashedPassword) => {
         if(err){
@@ -86,14 +86,51 @@ authRouter.post('/singup' , async (req , res) =>{
                     success:true,
                     statusCode:200,
                     body:{
-                        text:'User registered correctly!',
+                        text:'User registered !',
                         token,
                         user,
-                        logged:true
+                        
                     }
                  })
         }    
     })
+})
+
+authRouter.post("/login",(req , res) => {
+    passport.authenticate('local',(error,user) => {
+        if(error){
+            return res.status(500).send({
+            success:false,
+            statusCode:500,
+            body:{
+                text:'Error during authentication',
+                error
+            }
+        })
+        }
+
+        if(!user) {
+            return res.status(400).send({
+            success:false,
+            statusCode:400,
+            body:{
+                text:'User not found',
+            }
+        })
+        }
+
+        const token = jwt.sign(user, 'secret')
+
+            return res.status(200).send({
+            success:true,
+            statusCode:200,
+            body:{
+                text:'User logged in correctly!',
+                user,
+                token
+            }
+        })
+    })(req , res)
 })
 
 export default authRouter
