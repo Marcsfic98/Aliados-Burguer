@@ -19,6 +19,7 @@ passport.use(new LocalStrategy({usernameField:'email'}, async (email,password, c
     }
 
     const saltBuffer = user.salt.buffer
+    
 
     crypto.pbkdf2(password, saltBuffer, 310000 , 16 , 'sha256',( err , hashedPassword) => {
         if(err){
