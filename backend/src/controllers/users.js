@@ -8,7 +8,7 @@ export default class UsersControllers {
 
     async getUsers() {
         try {
-            const users = this.dataAccess.getUsers()
+            const users = await this.dataAccess.getUsers()
 
             return ok(users)
         } catch (error) {
