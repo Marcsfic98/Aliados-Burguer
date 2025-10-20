@@ -1,27 +1,39 @@
 import express from 'express'
-import UsersControllers from '../controllers/users.js'
-
-const usersRouter = express.Router()
-
-const usersControllers =new UsersControllers()
-
-usersRouter.get('/', async(req , res) => {
-    const { success , statusCode ,body} = await usersControllers.getUsers()
-
-    res.status(statusCode).send({success , statusCode ,body})
-})
+import PlatesControllers from '../controllers/plates.js'
 
 
-usersRouter.delete('/:id', async (req , res) => {
-    const { success , statusCode ,body} = await usersControllers.deleteUsers(req.params.id)
+const platesRouter = express.Router()
+
+const platesControllers =new PlatesControllers()
+
+platesRouter.get('/', async(req , res) => {
+    const { success , statusCode ,body} = await platesControllers.getPlates()
 
     res.status(statusCode).send({success , statusCode ,body})
 })
 
-usersRouter.put('/:id', async (req , res) => {
-    const { success , statusCode ,body} = await usersControllers.updateUsers(req.params.id , req.body)
+platesRouter.get('/availables/', async(req , res) => {
+    const { success , statusCode ,body} = await platesControllers.getAvailablePlates()
 
     res.status(statusCode).send({success , statusCode ,body})
 })
 
-export default usersRouter
+platesRouter.post('/', async (req , res) => {
+    const { success , statusCode ,body} = await platesControllers.addPlatesPlates(req.body)
+
+    res.status(statusCode).send({success , statusCode ,body})
+})
+
+platesRouter.delete('/:id', async (req , res) => {
+    const { success , statusCode ,body} = await platesControllers.deletePlates(req.params.id)
+
+    res.status(statusCode).send({success , statusCode ,body})
+})
+
+platesRouter.put('/:id', async (req , res) => {
+    const { success , statusCode ,body} = await platesControllers.updatePlates(req.params.id , req.body)
+
+    res.status(statusCode).send({success , statusCode ,body})
+})
+
+export default platesRouter
