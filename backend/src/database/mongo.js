@@ -1,4 +1,4 @@
-import { text } from 'express';
+
 import {MongoClient} from 'mongodb';
 
 export const Mongo = {

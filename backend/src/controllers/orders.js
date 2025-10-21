@@ -20,7 +20,7 @@ export default class OrdersControllers {
 
     async addOrders(orderData) {
         try {
-            const result = await this.dataAccess.addPlate(orderData)
+            const result = await this.dataAccess.addOrder(orderData)
 
             return ok(result)
         } catch (error) {
@@ -30,7 +30,7 @@ export default class OrdersControllers {
 
        async deleteOrders(orderId) {
         try {
-            const result = await this.dataAccess.deletePlate(orderId)
+            const result = await this.dataAccess.deleteOrder(orderId)
 
             return ok(result)
         } catch (error) {
@@ -40,7 +40,7 @@ export default class OrdersControllers {
 
     async updateOrders(orderId , orderData) {
         try {
-            const result = await this.dataAccess.updatePlate(orderId, orderData)
+            const result = await this.dataAccess.updateOrder(orderId, orderData)
 
             return ok(result)
         } catch (error) {
