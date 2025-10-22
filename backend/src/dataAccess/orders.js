@@ -77,9 +77,19 @@ export default class OrdersDataAccess {
     }
 
     async deleteOrder(orderId){
-         const result = await Mongo.db
+
+        const itensToDelete = await Mongo.db
+        collection('orderItems')
+        .deleteMany({orderId:new ObjectId(orderId)})
+
+         const orderToDelete = await Mongo.db
         .collection(collectionName)
         .findOneAndDelete({_id: new ObjectId(orderId)})
+
+        const result = {
+            itensToDelete,
+            orderToDelete
+        }
         
         return result
     }
