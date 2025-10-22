@@ -48,8 +48,6 @@ export default class OrdersDataAccess {
         return result
     }
 
-
-
     async addOrder(orderData) {
 
         const {items, ...orderDataRest } = orderData
