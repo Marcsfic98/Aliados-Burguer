@@ -41,6 +41,15 @@ export default class OrdersDataAccess {
                     foreignField: '_id',
                     as: 'orderItems.itemDetails'
                 }
+            },
+            {
+                $group: {
+                    _id:'$_id',
+                    userDatails:{$first:'$userDatails'},
+                    orderItems:{$push:'$orderItems'},
+                    pickupStatus:{$first: '$pickupStatus'},
+                    pickupTime:{$first: '$pickupTime'},
+                }
             }
         ])
         .toArray()
@@ -78,8 +87,8 @@ export default class OrdersDataAccess {
 
     async deleteOrder(orderId){
 
-        const itensToDelete = await Mongo.db
-        collection('orderItems')
+        const itemsToDelete = await Mongo.db
+        .collection('orderItems')
         .deleteMany({orderId:new ObjectId(orderId)})
 
          const orderToDelete = await Mongo.db
@@ -87,7 +96,7 @@ export default class OrdersDataAccess {
         .findOneAndDelete({_id: new ObjectId(orderId)})
 
         const result = {
-            itensToDelete,
+            itemsToDelete,
             orderToDelete
         }
         
