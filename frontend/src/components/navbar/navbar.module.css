@@ -1,0 +1,64 @@
+.navbarContainer{
+    background-color:var(--black-color);
+    height: 96px;
+    width: 100%;
+    
+}
+
+.navbarItems{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.contactsContainer{
+    flex-direction: column;
+    display: flex;
+    margin-left: 20px;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+.contacts{
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+
+.contacts a{
+    text-decoration: none;
+    color: var(--icons-color);
+    font-size: 18px;
+}
+
+.logo{
+    top: 1px;
+    width: 6em;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.navbarLinksContainer ul{
+    display: flex;
+    list-style: none;
+    margin-right: 20px;
+    margin-top: 30px;
+    font-size: 18px;
+    gap: 35px;
+}
+
+ .navbarLinksContainer a{
+    text-decoration: none;
+    color: var(--icons-color);
+ }
+
+.navbarIcons{
+    color: var(--icons-color);
+    font-size: 25px;
+    cursor: pointer;
+}
+
