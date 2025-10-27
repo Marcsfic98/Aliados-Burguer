@@ -4,7 +4,7 @@
     width: 100%;
     align-items: center;
     display: flex;
-    position: fixed;
+    margin-bottom: 60px;
 }
 
 .navbarItems{
@@ -53,6 +53,7 @@
     gap: 35px;
     
 }
+
 
  .navbarLinksContainer a{
     text-decoration: none;

@@ -4,6 +4,7 @@ import { FaInstagram ,FaWhatsapp } from "react-icons/fa";
 import { CgMenuCheese } from "react-icons/cg";
 import {Drawer} from '@mui/material'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar () {
 
@@ -27,19 +28,22 @@ export default function Navbar () {
                             <a href="#">(81) 99999-9999</a>
                         </div>
                     </div>
-                    <img className={styles.logo} src='/logoAliados.svg'/>
+                    
+                    <Link to={'/'}>
+                        <img className={styles.logo} src='/logoAliados.svg'/>
+                    </Link>
                     <div className={styles.navbarLinksContainer}>
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Pratos</a></li>
-                            <LuShoppingCart className={styles.navbarIcons} />
-                            <LuCircleUser className={styles.navbarIcons} />
+                            <li><Link to={'/'}>Home</Link></li>
+                            <li><Link to={'/plates'}>Pratos</Link></li>
+                            <Link to={'/cart'}><LuShoppingCart className={styles.navbarIcons} /></Link>
+                            <Link to={'/auth'} ><LuCircleUser className={styles.navbarIcons} /></Link>
                         </ul>
                     </div>
 
                     <div className={styles.MobileNavbarLinksContainer}>
                         
-                        <LuShoppingCart className={styles.navbarIcons} />
+                        <Link to={'/cart'}><LuShoppingCart className={styles.navbarIcons} /></Link>
                         <CgMenuCheese className={styles.navbarIcons} onClick={handleOpenMenu} />
                         
                     </div>
@@ -51,8 +55,8 @@ export default function Navbar () {
                 onClose={handleOpenMenu}>
                     
                     <div className={styles.drawer}>
-                        <a href="#">Home</a>
-                        <a href="#">Pratos</a>
+                         <Link to={'/'}>Home</Link>
+                         <Link to={'/plates'}>Pratos</Link>
                     </div>
                     
                 </Drawer>
