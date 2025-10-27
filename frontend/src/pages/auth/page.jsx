@@ -6,7 +6,7 @@ import authServices from "../../services/auth.jsx";
 export default function Auth() {
     const [formType , setFormType] = useState('login')
     const [formData , setFormData] = useState(null)
-    const{ login} = authServices()
+    const{ login , signUp ,authLoading} = authServices()
 
     const handleChangeFormType = () => {
         setFormData(null)
@@ -33,9 +33,15 @@ export default function Auth() {
             case 'signup':
                 if(formData.password !== formData.confirmPassword){
                     console.log('senha nao esta igual')
+                    return
                 }
+                signUp(formData)
             break
         }
+    }
+
+    if(authLoading){
+        return (<h1>Loading...</h1>)
     }
 
     if(formType === 'login'){
