@@ -2,7 +2,9 @@
     background-color:var(--black-color);
     height: 96px;
     width: 100%;
-    
+    align-items: center;
+    display: flex;
+    position: fixed;
 }
 
 .navbarItems{
@@ -18,7 +20,7 @@
     display: flex;
     margin-left: 20px;
     gap: 6px;
-    margin-top: 20px;
+
 }
 
 .contacts{
@@ -31,11 +33,12 @@
 .contacts a{
     text-decoration: none;
     color: var(--icons-color);
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .logo{
-    top: 1px;
+    top: -20px;
     width: 6em;
     position: absolute;
     left: 50%;
@@ -46,14 +49,15 @@
     display: flex;
     list-style: none;
     margin-right: 20px;
-    margin-top: 30px;
     font-size: 18px;
     gap: 35px;
+    
 }
 
  .navbarLinksContainer a{
     text-decoration: none;
     color: var(--icons-color);
+    font-weight: 700;
  }
 
 .navbarIcons{
@@ -62,3 +66,39 @@
     cursor: pointer;
 }
 
+.MobileNavbarLinksContainer{
+    gap:20px;
+    padding: 20px;
+    display: none;
+}
+
+.drawer{
+    padding: 4em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: 20px;
+    gap: 1em;
+    background-color: var(--black-color);
+}
+
+.drawer a{
+    text-decoration: none;
+    color: var(--icons-color);
+    font-weight: 700;
+}
+
+@media screen and (max-width:768px) {
+    .MobileNavbarLinksContainer{
+        display: flex;
+    }
+
+    .navbarLinksContainer {
+        display: none;
+    }
+
+    .contacts a{
+        display: none;
+    }
+
+}

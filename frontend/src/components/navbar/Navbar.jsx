@@ -1,8 +1,17 @@
 import styles from './navbar.module.css'
 import { LuShoppingCart ,LuCircleUser} from "react-icons/lu";
 import { FaInstagram ,FaWhatsapp } from "react-icons/fa";
+import { CgMenuCheese } from "react-icons/cg";
+import {Drawer} from '@mui/material'
+import { useState } from 'react';
 
 export default function Navbar () {
+
+    const [openMenu , setOpenMenu] = useState(false)
+
+    const handleOpenMenu = () => {
+        setOpenMenu(!openMenu)
+    }
     return(
         <>
             <nav className={styles.navbarContainer}>
@@ -27,7 +36,26 @@ export default function Navbar () {
                             <LuCircleUser className={styles.navbarIcons} />
                         </ul>
                     </div>
+
+                    <div className={styles.MobileNavbarLinksContainer}>
+                        
+                        <LuShoppingCart className={styles.navbarIcons} />
+                        <CgMenuCheese className={styles.navbarIcons} onClick={handleOpenMenu} />
+                        
+                    </div>
                 </div>
+
+                <Drawer
+                anchor='right'
+                open={openMenu}
+                onClose={handleOpenMenu}>
+                    
+                    <div className={styles.drawer}>
+                        <a href="#">Home</a>
+                        <a href="#">Pratos</a>
+                    </div>
+                    
+                </Drawer>
             </nav>
         </>
     )
