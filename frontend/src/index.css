@@ -21,8 +21,9 @@ button{
     gap: 3px;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: fit-content;
-    padding: 10px 18px;
+    padding: 12px 18px;
     border: none;
     background-color: var(--black-color);
     color:var(--icons-color);
@@ -36,3 +37,4 @@ p{
     gap: .2em;
     align-items: center;
 }
+
