@@ -13,4 +13,26 @@
 
 #root{
     font-size: x-large;
+    background-color: #F5F5F5;
+    min-height: 100vh;
+}
+
+button{ 
+    gap: 3px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 18px;
+    border: none;
+    background-color: var(--black-color);
+    color:var(--icons-color);
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+p{
+    display: flex;
+    gap: .2em;
+    align-items: center;
 }

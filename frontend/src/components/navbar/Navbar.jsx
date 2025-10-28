@@ -30,7 +30,7 @@ export default function Navbar () {
                     </div>
                     
                     <Link to={'/'}>
-                        <img className={styles.logo} src='/logoAliados.svg'/>
+                        <img className={styles.logo} src='/img/logoAliados.svg'/>
                     </Link>
                     <div className={styles.navbarLinksContainer}>
                         <ul>
