@@ -71,6 +71,7 @@ authRouter.post('/singup' , async (req , res) =>{
         const result = await Mongo.db
         .collection(collectionName)
         .insertOne({
+            name: req.body.name,
             email: req.body.email,
             password: hashedPassword,
             salt
@@ -79,7 +80,7 @@ authRouter.post('/singup' , async (req , res) =>{
         if(result.insertedId) {
             const user = await Mongo.db
             .collection(collectionName)
-            .findOne({_id: new ObjectId(result.insertedId)})
+            .findOne({_id: new ObjectId(result.insertedId)},{projection: {password: 0 , salt: 0} })
 
             const token = jwt.sign(user , 'secret')
             

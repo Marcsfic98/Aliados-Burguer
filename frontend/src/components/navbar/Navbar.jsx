@@ -37,7 +37,7 @@ export default function Navbar () {
                             <li><Link to={'/'}>Home</Link></li>
                             <li><Link to={'/plates'}>Pratos</Link></li>
                             <Link to={'/cart'}><LuShoppingCart className={styles.navbarIcons} /></Link>
-                            <Link to={'/auth'} ><LuCircleUser className={styles.navbarIcons} /></Link>
+                            <Link to={'/profile'} ><LuCircleUser className={styles.navbarIcons} /></Link>
                         </ul>
                     </div>
 

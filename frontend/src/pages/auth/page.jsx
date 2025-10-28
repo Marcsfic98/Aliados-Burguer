@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from './page.module.css'
 import authServices from "../../services/auth.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
     const [formType , setFormType] = useState('login')
     const [formData , setFormData] = useState(null)
     const{ login , signUp ,authLoading} = authServices()
+
+    const navigate = useNavigate()
+    const authData = JSON.parse(localStorage.getItem('auth'))
+
+    useEffect (() => {
+        if(authData){
+             navigate('/profile')
+        }
+    },[authData ,navigate])
 
     const handleChangeFormType = () => {
         setFormData(null)
@@ -16,6 +26,7 @@ export default function Auth() {
             setFormType('login')
         }
     }
+
 
     const handleFormDataChange = (e) => {
         setFormData({
@@ -47,7 +58,9 @@ export default function Auth() {
     if(formType === 'login'){
         return(
             <div className={styles.authPageConteiner} >
-                <h1>Entrar</h1>
+               {formType === 'login' ? (
+                <>
+                     <h1>Entrar</h1>
                 <button onClick={handleChangeFormType}>Não tem uma conta ? Clique aqui !</button>
                 <form onSubmit={handleSubmitForm}>
                     <TextField
@@ -68,6 +81,8 @@ export default function Auth() {
 
                     <Button type="submit">Entar</Button>
                 </form>
+                </>
+               ):null}
             </div>
         )
     }
@@ -75,7 +90,9 @@ export default function Auth() {
     if(formType === 'signup'){
          return(
             <div  className={styles.authPageConteiner} >
-                <h1>Cadastre-se</h1>
+            {formType === 'signup' ? (
+                <>
+                    <h1>Cadastre-se</h1>
                 <button onClick={handleChangeFormType}>Já tem uma conta ? Clique aqui !</button>
 
                 <form onSubmit={handleSubmitForm}>
@@ -114,6 +131,9 @@ export default function Auth() {
 
                     <Button type="submit">Cadastrar</Button>
                 </form>
+                </>
+            ):null
+            }
             </div>
         )
     }
