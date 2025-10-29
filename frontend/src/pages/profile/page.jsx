@@ -4,6 +4,7 @@ import authServices from "../../services/auth";
 import ordersServices from "../../services/orders";
 import styles from './page.module.css'
 import { LuLogOut ,LuTimer , LuCircleAlert , LuCircleCheck } from "react-icons/lu";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
     const navigate = useNavigate()
@@ -59,6 +60,7 @@ export default function Profile() {
 
         :   <div>
                 Você ainda não fez seu pedido ...
+                <button><Link className={styles.platesLink} to={'/plates'}>Acesse nosso Cardapio</Link></button>
             </div>
             }
         </div>

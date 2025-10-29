@@ -43,3 +43,8 @@
 .completed{
     background-color: rgb(29, 183, 29);
 }
+
+.platesLink{
+    color: var(--icons-color);
+    text-decoration: none;
+}

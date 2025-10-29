@@ -55,8 +55,9 @@ export default function Navbar () {
                 onClose={handleOpenMenu}>
                     
                     <div className={styles.drawer}>
-                         <Link to={'/'}>Home</Link>
-                         <Link to={'/plates'}>Pratos</Link>
+                         <Link onClick={handleOpenMenu} to={'/'}>Home</Link>
+                         <Link onClick={handleOpenMenu} to={'/plates'}>Pratos</Link>
+                         <Link onClick={handleOpenMenu} to={'/profile'}>Perfil</Link>
                     </div>
                     
                 </Drawer>
