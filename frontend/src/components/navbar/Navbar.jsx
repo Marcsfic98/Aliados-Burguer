@@ -20,7 +20,7 @@ export default function Navbar () {
                     <div className={styles.contactsContainer}>
                         <div className={styles.contacts}>
                             <FaInstagram   className={styles.navbarIcons}/>
-                            <a href="#">@aliadosburguer</a>
+                            <a href="#">@ALIADOSBURGUER</a>
                         </div >
 
                         <div className={styles.contacts}>
@@ -34,8 +34,8 @@ export default function Navbar () {
                     </Link>
                     <div className={styles.navbarLinksContainer}>
                         <ul>
-                            <li><Link to={'/'}>Home</Link></li>
-                            <li><Link to={'/plates'}>Pratos</Link></li>
+                            <li><Link to={'/'}>HOME</Link></li>
+                            <li><Link to={'/plates'}>PRATOS</Link></li>
                             <Link to={'/cart'}><LuShoppingCart className={styles.navbarIcons} /></Link>
                             <Link to={'/profile'} ><LuCircleUser className={styles.navbarIcons} /></Link>
                         </ul>
@@ -55,9 +55,9 @@ export default function Navbar () {
                 onClose={handleOpenMenu}>
                     
                     <div className={styles.drawer}>
-                         <Link onClick={handleOpenMenu} to={'/'}>Home</Link>
-                         <Link onClick={handleOpenMenu} to={'/plates'}>Pratos</Link>
-                         <Link onClick={handleOpenMenu} to={'/profile'}>Perfil</Link>
+                         <Link onClick={handleOpenMenu} to={'/'}>HOME</Link>
+                         <Link onClick={handleOpenMenu} to={'/plates'}>PRATOS</Link>
+                         <Link onClick={handleOpenMenu} to={'/profile'}>PERFIL</Link>
                     </div>
                     
                 </Drawer>

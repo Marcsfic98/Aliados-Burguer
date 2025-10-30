@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import authServices from "../../services/auth";
 import ordersServices from "../../services/orders";
 import styles from './page.module.css'
-import { LuLogOut ,LuTimer , LuCircleAlert , LuCircleCheck } from "react-icons/lu";
+import { LuLogOut ,LuTimer , LuCircleAlert , LuCircleCheck , LuTrash } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import Loading from "../loading/page";
 
@@ -35,9 +35,15 @@ export default function Profile() {
 
     return(
         <div className={styles.pageContainer} >
-            <h1>{authData?.user?.name}</h1>
-            <h3>{authData?.user?.email}</h3>
-            <button onClick={handleLogout}>Sair <LuLogOut/></button>
+           <div className={styles.userMain}>
+                <div className={styles.infosUser}>
+                    <h1>{authData?.user?.name}</h1>
+                    <h3>{authData?.user?.email}</h3>
+                </div>
+                <div className={styles.btnSair}>
+                    <button onClick={handleLogout}>Sair <LuLogOut/></button>
+                </div>
+           </div>
 
             {ordersList.length > 0 ?
             <div className={styles.ordersContainer}>
@@ -55,13 +61,17 @@ export default function Profile() {
                                 <br/>
                             </div>
                         ))}
+
+                        <div className={styles.buttons}>
+                            <LuTrash/>
+                        </div>
                     </div>
                 ))}
             </div>
 
-        :   <div>
+        :   <div className={styles.notPlates}>
                 Você ainda não fez seu pedido ...
-                <button><Link className={styles.platesLink} to={'/plates'}>Acesse nosso Cardapio</Link></button>
+                <button><Link className={styles.platesLink} to={'/plates'}>Peça agora</Link></button>
             </div>
             }
         </div>

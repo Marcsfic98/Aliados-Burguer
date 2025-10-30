@@ -2,11 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Bebas Neue", sans-serif;
 }
 
 main {
-    min-height: 100vh;
+    min-height: 60vh;
     margin: 0 auto;
 }
 
@@ -21,6 +21,7 @@ main {
     background-color: #0f0c07;
     min-height: 100vh;
     color: var(--txt-color);
+    
 }
 
 button{ 
@@ -36,7 +37,7 @@ button{
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
-    font-size: x-large;
+    font-size: 28px;
 }
 
 p{

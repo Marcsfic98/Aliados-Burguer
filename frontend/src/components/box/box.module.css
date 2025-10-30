@@ -2,14 +2,39 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: 25px;
+    gap: 85px;
     width:80% ;
     margin:  auto;
 }
 
 .box{
-    width: 325px;
-    height: 190px;
-    background-color: aliceblue;
+    width: 60vh;
+    cursor: pointer;
+}
 
+.box img{
+    width: 100%;
+    border-radius: 18px;
+}
+
+.box p {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    
+}
+
+.boxPrice{
+    color: aliceblue;
+}
+
+@media screen and (max-width:768px) {
+    .boxContainer{
+        flex-direction: column;
+    }
+
+    .box{
+        width: 40vh;
+    }
 }

@@ -6,3 +6,12 @@
     gap: 0.5em;
 }
 
+input{
+    width: 250px;
+    height: 43px;
+    margin: 20px 0;
+    border-radius: 12px;
+    padding-left: 15px;
+    background-color: rgb(197, 200, 203);
+    font-size: 18px;
+}

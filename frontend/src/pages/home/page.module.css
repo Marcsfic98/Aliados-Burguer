@@ -3,32 +3,31 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2em;
-    
-    
+    gap: 2em; 
 }
 
 .bannerSection{
     display: flex;
     flex-direction: column;
-    height: 850px;
     width: 100%;
-    justify-content: end;
+    height: auto;
+    
 }
 
 
 .bannerImg{
     background-image: url('/img/main.png');
-    width: 100%;
-    height: 100%;
+    width: 98vw;
+    height: 100vh;
     background-repeat: no-repeat;
     background-size: contain;
+    margin: 0 auto;
 }
 
 .bannerTxt{
     color:var(--txt-color);
     text-align: center;
-    font-size: 48px;
+    font-size: 78px;
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -38,20 +37,7 @@
     margin-bottom: 35px;
 }
 
-.foodSection{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 2em;
-    background-color: var(--black-color);
-    color: var(--icons-color);
-    padding: 2em;
-    border-radius: 2em;
-    text-align: center;
-}
 
-.foodSection h4{
-    margin-top: 30px;
-}
 
 .contactSection{
     display: flex;
@@ -75,22 +61,41 @@
     flex-direction: column;
     align-items: center;
     gap: 55px;
+    margin-bottom: 55px;
+}
+
+.platesLink{
+    color: var(--black-color);
+    text-decoration: none;
 }
 
 .promoSection h2{
-     font-size: 48px;
+     font-size: 68px;
     font-weight: bold;
 }
 
 
 @media screen and (max-width:1000px) {
-    .foodSection{
-        grid-template-columns: repeat(1 , 1fr);
-    }
 
     .bannerTxt{
         font-size: 32px;
     }
 
+     .bannerImg{
+   
+        
+    height: 60vh;
+   
+}
+
     
+}
+
+@media screen and (max-width:768px) {
+    .bannerImg{
+   
+        
+    height: 45vh;
+   
+}
 }

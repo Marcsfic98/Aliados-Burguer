@@ -4,6 +4,7 @@ import styles from './page.module.css'
 import authServices from "../../services/auth.jsx";
 import { useNavigate } from "react-router-dom";
 import { LuLogIn } from "react-icons/lu";
+import Loading from "../loading/page.jsx";
 
 export default function Auth() {
     const [formType , setFormType] = useState('login')
@@ -53,7 +54,7 @@ export default function Auth() {
     }
 
     if(authLoading){
-        return (<h1>Loading...</h1>)
+        return (<Loading/>)
     }
 
     if(formType === 'login'){
@@ -64,23 +65,25 @@ export default function Auth() {
                      <h1>Entrar</h1>
                 <button onClick={handleChangeFormType}>Não tem uma conta ? Clique aqui !</button>
                 <form onSubmit={handleSubmitForm}>
-                    <TextField
+                    <input
                     required
                     label="Email"
                     type="email"
                     name="email"
+                    placeholder="E-mail"
                     onChange={handleFormDataChange}
                     />
 
-                      <TextField
+                      <input
                     required
                     label="Senha"
                     type="password"
                     name="password"
+                    placeholder="senha"
                     onChange={handleFormDataChange}
                     />
 
-                    <Button type="submit">Entar <LuLogIn/></Button>
+                    <button type="submit">Entar <LuLogIn/></button>
                 </form>
                 </>
                ):null}
@@ -98,39 +101,43 @@ export default function Auth() {
 
                 <form onSubmit={handleSubmitForm}>
 
-                      <TextField
+                      <input
                     required
                     label="Nome Completo"
                     type="name"
                     name="name"
+                    placeholder="Nome Completo"
                     onChange={handleFormDataChange}
                     />
 
-                    <TextField
+                    <input
                     required
                     label="Email"
                     type="email"
                     name="email"
+                    placeholder="E-mail"
                     onChange={handleFormDataChange}
                     />
 
-                    <TextField
+                    <input
                     required
                     label="Senha"
                     type="password"
                     name="password"
+                    placeholder="senha"
                     onChange={handleFormDataChange}
                     />
 
-                   <TextField
+                   <input
                     required
                     label="Confirme a Senha"
                     type="password"
                     name="confirmPassword"
+                    placeholder="confirmar senha"
                     onChange={handleFormDataChange}
                     />
 
-                    <Button type="submit">Cadastrar</Button>
+                    <button type="submit">Cadastrar</button>
                 </form>
                 </>
             ):null
