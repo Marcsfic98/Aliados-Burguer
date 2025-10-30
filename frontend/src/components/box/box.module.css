@@ -1,0 +1,15 @@
+.boxContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 25px;
+    width:80% ;
+    margin:  auto;
+}
+
+.box{
+    width: 325px;
+    height: 190px;
+    background-color: aliceblue;
+
+}

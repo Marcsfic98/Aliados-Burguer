@@ -5,16 +5,22 @@
     font-family: "Montserrat", sans-serif;
 }
 
+main {
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
 :root{
     --black-color:#0f0f0d ;
     --icons-color:#b08225;
-
+    --txt-color: #d1b27d;
 }
 
 #root{
     font-size: x-large;
-    background-color: #F5F5F5;
+    background-color: #0f0c07;
     min-height: 100vh;
+    color: var(--txt-color);
 }
 
 button{ 
@@ -25,11 +31,12 @@ button{
     width: fit-content;
     padding: 12px 18px;
     border: none;
-    background-color: var(--black-color);
-    color:var(--icons-color);
+    background-color: var(--icons-color);
+    color:var(--black-color);
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
+    font-size: x-large;
 }
 
 p{

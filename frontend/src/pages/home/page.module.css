@@ -4,7 +4,38 @@
     align-items: center;
     justify-content: center;
     gap: 2em;
-    padding: 1em;
+    
+    
+}
+
+.bannerSection{
+    display: flex;
+    flex-direction: column;
+    height: 850px;
+    width: 100%;
+    justify-content: end;
+}
+
+
+.bannerImg{
+    background-image: url('/img/main.png');
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.bannerTxt{
+    color:var(--txt-color);
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    padding: 0 30px;
+    margin-bottom: 35px;
 }
 
 .foodSection{
@@ -39,13 +70,27 @@
     }
 
 
+ .promoSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 55px;
+}
+
+.promoSection h2{
+     font-size: 48px;
+    font-weight: bold;
+}
+
 
 @media screen and (max-width:1000px) {
     .foodSection{
         grid-template-columns: repeat(1 , 1fr);
     }
 
-
+    .bannerTxt{
+        font-size: 32px;
+    }
 
     
 }
