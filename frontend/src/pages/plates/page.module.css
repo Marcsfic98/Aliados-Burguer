@@ -1,0 +1,16 @@
+.platesMain{
+    text-align: center;
+}
+
+.platesMain h1{
+    padding: 55px 0;
+}
+
+.platesContainer{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 42px;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+}
