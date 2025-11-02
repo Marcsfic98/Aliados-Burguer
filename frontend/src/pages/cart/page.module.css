@@ -1,0 +1,83 @@
+.cartContainer{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 800px;
+    margin: 50px auto;
+    gap: 25px;
+
+}
+
+.txtCart{
+    text-align: center;
+    margin-bottom: 20px;
+    
+}
+
+.fullContainer{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.orderContainer{
+    display: flex;
+    padding: 20px;
+    cursor: pointer;
+    border: 2px solid var(--txt-color);
+    border-radius: 18px;
+}
+
+.orderContainer img{
+    width: 200px;
+    border-radius: 15px;
+}
+
+.orderContainer h2{
+    font-size: 20px;
+    margin-left: 12px;
+}
+
+.orderContainer p{
+    font-size: 16px;
+    color: aliceblue;
+    margin-left: 12px;
+}
+
+
+.platesLink{
+    color: var(--black-color);
+    text-decoration: none;
+}
+
+.cartContainerOff{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.btnQuantity{
+    display: flex;
+    margin-left: 12px;
+    align-items: center;
+    gap: 15px;
+}
+
+.btnQuantity button{
+    padding: 0 15px;
+}
+
+.boxQuantity{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.boxQuantity button{
+    font-size: 18px;
+}

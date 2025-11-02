@@ -30,7 +30,7 @@ button{
     align-items: center;
     justify-content: center;
     width: fit-content;
-    padding: 12px 18px;
+    padding: 10px 14px;
     border: none;
     background-color: var(--icons-color);
     color:var(--black-color);
