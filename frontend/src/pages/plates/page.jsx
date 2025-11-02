@@ -4,12 +4,14 @@ import Loading from "../loading/page"
 import PlateCard from "../../components/plateCard/plateCard"
 import styles from './page.module.css'
 import PlatePopup from "../../components/platePopup/platePopup"
+import { useCartContext } from "../../contexts/useCartContext"
 
 
 export default function Plates() {
 
     const {getAvailableplates,plateLoading,platesList,refetchplates } = platesServices()
     const [plateSelected , setPlateSelected] = useState(null)
+    const { addToCart} = useCartContext()
 
      useEffect (() => {
              if (refetchplates){
@@ -28,6 +30,11 @@ export default function Plates() {
         const handleClosePopup = () => {
             setPlateSelected(null)
         }
+
+        const handleAddToCart = (itemToAdd) => {
+            addToCart(itemToAdd)
+            handleClosePopup()
+        }
         
     return(
         <div className={styles.platesMain} >
@@ -43,7 +50,7 @@ export default function Plates() {
             </div>
 
             {plateSelected&&
-                   <PlatePopup plateData={plateSelected} onClose={handleClosePopup}/> 
+                   <PlatePopup plateData={plateSelected} onClose={handleClosePopup} addToCart={handleAddToCart}/> 
             }
         </div>
     )

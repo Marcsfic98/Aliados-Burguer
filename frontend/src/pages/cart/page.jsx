@@ -1,7 +1,15 @@
 import Navbar from "../../components/navbar/Navbar";
+import { useCartContext } from "../../contexts/useCartContext";
 
 export default function Cart() {
-    return(
+
+    
+        const {cartItems} = useCartContext()
+
+        console.log(cartItems)
+
+        return(
+
         <>
             <h1>cart</h1>
         </>
