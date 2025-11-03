@@ -23,7 +23,7 @@
     margin-bottom: 50px;
 }
 
-.orderContainer{
+.itemContainer{
     display: flex;
     padding: 20px;
     cursor: pointer;
@@ -31,17 +31,17 @@
     border-radius: 18px;
 }
 
-.orderContainer img{
+.itemContainer img{
     width: 200px;
     border-radius: 15px;
 }
 
-.orderContainer h2{
+.itemContainer h2{
     font-size: 20px;
     margin-left: 12px;
 }
 
-.orderContainer p{
+.itemContainer p{
     font-size: 16px;
     color: aliceblue;
     margin-left: 12px;

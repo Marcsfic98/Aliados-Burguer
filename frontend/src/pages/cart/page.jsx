@@ -3,13 +3,30 @@ import { useCartContext } from "../../contexts/useCartContext";
 import { Link } from "react-router-dom";
 
 import { CiCircleRemove } from "react-icons/ci";
+import { useEffect } from 'react';
 
 export default function Cart() {
 
     
-        const {cartItems} = useCartContext()
+        const {cartItems , updatedCartItems , removeFromCart} = useCartContext()
 
-        console.log(cartItems)
+       
+
+        const handleChangeItemQty = (mode , itemId ) =>{
+            const updatedCart = cartItems.map((item) => {
+                if(item._id === itemId)  {
+                    if(mode === 'less' && item.quantity > 1) {
+                        item.quantity -= 1
+                    }else if (mode === 'more'){
+                        item.quantity += 1
+                    }
+                }
+                return item
+            })
+            updatedCartItems(updatedCart)
+        }
+
+      
 
         return(
 
@@ -17,23 +34,23 @@ export default function Cart() {
             <div  className={styles.fullContainer}>
                 <h1 className={styles.txtCart}>Seu Carrinho</h1>
                 <div className={styles.cartContainer}>
-                { cartItems.map((order) => (
-                        <div className={styles.orderContainer} key={order.id}>
+                { cartItems.map((item) => (
+                        <div className={styles.itemContainer} key={item.id}>
                             <img src="/img/promos/promosmash.jpg" alt="" />
                             <div>
-                                <h2>{order.name}</h2>
-                                <p>{order.description}</p>
+                                <h2>{item.name}</h2>
+                                <p>{item.description}</p>
                             <div>
                                     <p>Quantidade:</p>
 
                                     <div className={styles.boxQuantity}>
                                         <div className={styles.btnQuantity}>
-                                        <button>-</button>
-                                        <h2>{order.quantity}</h2>
-                                        <button>+</button>
+                                        <button  onClick={() => (handleChangeItemQty('less', item._id))} >-</button>
+                                        <h2>{item.quantity}</h2>
+                                        <button  onClick={() => (handleChangeItemQty('more', item._id))}>+</button>
                                     </div>   
 
-                                        <button><CiCircleRemove /></button>
+                                        <button onClick={() => {removeFromCart(item._id)}} ><CiCircleRemove /></button>
                                     </div>     
                                 </div>    
 
