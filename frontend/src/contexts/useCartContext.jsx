@@ -24,6 +24,10 @@ export function CartProvider({children}) {
         setCartItems(items)
     } 
 
+    const clearCart = () => {
+        setCartItems([])
+    }
+
 
     const removeFromCart = (itemId) => {
         const cartItemsSanitized = cartItems.filter((item=>{
@@ -37,7 +41,7 @@ export function CartProvider({children}) {
 
     return(
         <>
-            <CartContext.Provider value={{removeFromCart, addToCart ,cartItems , updatedCartItems }}>
+            <CartContext.Provider value={{removeFromCart, addToCart ,cartItems , updatedCartItems,clearCart }}>
                 {children}
             </CartContext.Provider>
         </>

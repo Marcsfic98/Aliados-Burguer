@@ -33,7 +33,30 @@ export default function ordersServices() {
         })
     }
 
+     const sendOrders = (orderData) => {
+        setOrderLoading(true)
+        fetch(`${url}`, {
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*'
+            },
+            body:JSON.stringify(orderData)
+        })
+        .then((response) => response.json()) 
+        .then((result) => {
+           
+                console.log(result)
+
+        })
+        .catch((error)=> {
+            console.log(error)
+        })
+        .finally(() => {
+            setOrderLoading(false)
+        })
+    }
     
 
-    return{ getUserOrders, orderLoading ,refetchOrders, ordersList}
+    return{ getUserOrders, orderLoading ,refetchOrders, ordersList , sendOrders}
 }

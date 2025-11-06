@@ -3,13 +3,16 @@ import { useCartContext } from "../../contexts/useCartContext";
 import { Link } from "react-router-dom";
 
 import { CiCircleRemove } from "react-icons/ci";
-import { useEffect } from 'react';
+import {  useState } from 'react';
+import ConfirmOrderPopup from '../../components/confirmOrderPopup/confirmOrederPopup';
+import ordersServices from '../../services/orders';
 
 export default function Cart() {
 
     
-        const {cartItems , updatedCartItems , removeFromCart} = useCartContext()
-
+        const {cartItems , updatedCartItems , removeFromCart ,clearCart} = useCartContext()
+        const {sendOrders } = ordersServices()
+        const [confirmPopupOpem, setConfirmPopupOpem] = useState (false)
        
 
         const handleChangeItemQty = (mode , itemId ) =>{
@@ -26,16 +29,32 @@ export default function Cart() {
             updatedCartItems(updatedCart)
         }
 
-      
+      const handleOpemPopup = () => {
+            
+            setConfirmPopupOpem(!confirmPopupOpem)
+      }
+
+      const handleConfirmOrder = (orderData) => {
+            orderData.items = cartItems.map((item) => {
+                return{plateId:item._id , quantity:item.quantity}
+            })
+            sendOrders(orderData)
+            setConfirmPopupOpem(!confirmPopupOpem)
+            clearCart()
+      }
+
 
         return(
 
-       cartItems && cartItems.length > 0 ? (
+
+            <>
+            
+       {cartItems && cartItems.length > 0 ? (
             <div  className={styles.fullContainer}>
                 <h1 className={styles.txtCart}>Seu Carrinho</h1>
                 <div className={styles.cartContainer}>
                 { cartItems.map((item) => (
-                        <div className={styles.itemContainer} key={item.id}>
+                        <div className={styles.itemContainer} key={item._id}>
                             <img src="/img/promos/promosmash.jpg" alt="" />
                             <div>
                                 <h2>{item.name}</h2>
@@ -46,7 +65,7 @@ export default function Cart() {
                                     <div className={styles.boxQuantity}>
                                         <div className={styles.btnQuantity}>
                                         <button  onClick={() => (handleChangeItemQty('less', item._id))} >-</button>
-                                        <h2>{item.quantity}</h2>
+                                        <h5>{item.quantity}</h5>
                                         <button  onClick={() => (handleChangeItemQty('more', item._id))}>+</button>
                                     </div>   
 
@@ -58,13 +77,16 @@ export default function Cart() {
                         </div>
                     ))}
                 </div>
-                    <button>Confirmar pedido</button>
+                    <button  onClick={handleOpemPopup} >Confirmar pedido</button>
             </div>
         ): 
         < div className={styles.cartContainerOff}>
             <h1>Seu carrinho está vazio ...</h1>
             <button className={styles.txtCart}><Link className={styles.platesLink} to={'/plates'}>Peça agora</Link></button>
-        </div>
+        </div>}
+
+        <ConfirmOrderPopup open={confirmPopupOpem} onClose={handleOpemPopup} onConfirm={handleConfirmOrder} />
+            </>
            
         
     )
