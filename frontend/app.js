@@ -67,10 +67,11 @@ function resetCashForm() {
 
 function updateCashSummary() {
   const todayEntry = cashEntries.find((entry) => entry.date === localDateString());
+  const totalBalance = cashEntries.reduce((total, entry) => total + Number(entry.balance), 0);
   document.querySelector('#today-received').textContent = currency.format(todayEntry?.received || 0);
   document.querySelector('#today-withdrawal').textContent = currency.format(todayEntry?.withdrawal || 0);
   document.querySelector('#today-delivery').textContent = currency.format(todayEntry?.delivery || 0);
-  document.querySelector('#today-balance').textContent = currency.format(todayEntry?.balance || 0);
+  document.querySelector('#today-balance').textContent = currency.format(totalBalance);
 }
 
 function renderCashEntries() {

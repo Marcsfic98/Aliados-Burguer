@@ -66,7 +66,7 @@ cashRouter.get('/', async (req, res) => {
         SELECT date::text AS date, weekday, received, withdrawal, delivery,
                withdrawal_reason AS "withdrawalReason", balance
         FROM daily_cash
-        ORDER BY date DESC
+        ORDER BY date ASC
     `);
     res.send(rows);
 });
