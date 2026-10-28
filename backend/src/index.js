@@ -1,9 +1,13 @@
 import express from "express";
 import cors from "cors";
-import { Mongo } from "./database/mongo.js";
-import {config} from   "dotenv";
+import { Postgres } from "./database/postgres.js";
+import { config } from "dotenv";
 import authRouter from "./auth/auth.js";
 import usersRouter from "./routes/users.js";
+import cashRouter from "./routes/cash.js";
+import ingredientsRouter from "./routes/ingredients.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 config()
 
@@ -13,26 +17,33 @@ async function main () {
 
     const app = express();
 
-    const mongoConnection = await Mongo.connect({mongoConnectionString:process.env.MONGO_CS , mongoDbName:process.env.MONGO_DB_NAME});
-    console.log(mongoConnection)
+    await Postgres.connect({
+        connectionString: process.env.DATABASE_URL
+    });
 
     app.use(express.json());
     app.use(cors());
 
-    app.get('/',(req , res) => {
-        res.send({
-            success:true,
-            statusCode:200,
-            body:'Bem vindo a Aliados Burguer'
-        })
-    })
+    app.use('/auth', authRouter);
+    app.use('/users', usersRouter);
+    app.use('/api/cash', cashRouter);
+    app.use('/api/ingredients', ingredientsRouter);
+    app.use(express.static(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../frontend')));
 
-    app.use('/auth', authRouter)
-    app.use('/users',usersRouter)
+    app.use((error, req, res, next) => {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: 'Ocorreu um erro interno. Tente novamente.'
+        });
+    });
 
     app.listen(port,()=>{
         console.log(`Server running on http://${hostname}:${port}`)
     })
 }
 
-main();
+main().catch((error) => {
+    console.error('Não foi possível iniciar o servidor:', error);
+    process.exitCode = 1;
+});

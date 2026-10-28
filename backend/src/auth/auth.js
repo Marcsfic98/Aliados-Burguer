@@ -1,137 +1,99 @@
 import express from 'express';
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
-import crypto from 'crypto';
-import { Mongo } from '../database/mongo.js';
+import { Postgres } from '../database/postgres.js';
 import jwt from 'jsonwebtoken';
-import { ObjectId } from 'mongodb';
-import { text } from 'stream/consumers';
-
-const collectionName = 'users';
-
-passport.use(new LocalStrategy({usernameField:'email'}, async (email,password, callback)=> {
-    const user = await Mongo.db
-    .collection(collectionName)
-    .findOne({email: email})
-
-    if(!user){
-        return callback(null,false)
-    }
-
-    const saltBuffer = user.salt.buffer
-    
-
-    crypto.pbkdf2(password, saltBuffer, 310000 , 16 , 'sha256',( err , hashedPassword) => {
-        if(err){
-            return callback(null,false)
-        }
-
-        const userPasswordBuffer = Buffer.from(user.password.buffer)
-
-        if(!crypto.timingSafeEqual(userPasswordBuffer , hashedPassword)) {
-            return  callback(null,false)
-        }
-
-        const {password , salt , ...rest} = user
-
-        return callback(null, rest)
-    })
-}));
+import { hashPassword, verifyPassword } from './passwords.js';
 
 const authRouter = express.Router();
 
-authRouter.post('/singup' , async (req , res) =>{
-    const checkUser = await Mongo.db
-    .collection(collectionName)
-    .findOne({email:req.body.email})
+function isValidCredentials(email, password) {
+    return typeof email === 'string'
+        && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        && email.length <= 254
+        && typeof password === 'string'
+        && password.length >= 8
+        && password.length <= 1024;
+}
 
-    if(checkUser) {
-        return res.status(500).send({
-            success:false,
-            statusCode:500,
-            body:{
-                text:'User already exists!'
-            }
-        })
+function createToken(user) {
+    if (!process.env.JWT_SECRET) {
+        throw new Error('Configure JWT_SECRET no arquivo backend/.env.');
     }
 
-    const salt = crypto.randomBytes(16)
-    crypto.pbkdf2(req.body.password , salt , 310000, 16 , 'sha256', async (err , hashedPassword)=>{
-        if(err){
-             return res.status(500).send({
-            success:false,
-            statusCode:500,
-            body:{
-                text:'Error on crypto password!',
-                err:err
-            }
+    return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '12h' });
+}
+
+async function signup(req, res) {
+    const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+    const { password } = req.body ?? {};
+    if (!isValidCredentials(email, password)) {
+        return res.status(400).send({
+            success: false,
+            statusCode: 400,
+            body: { text: 'Informe um e-mail válido e uma senha com pelo menos 8 caracteres.' }
+        });
+    }
+
+    const { salt, passwordHash } = await hashPassword(password);
+    try {
+        const { rows } = await Postgres.query(`
+            INSERT INTO users (email, password_hash, salt)
+            VALUES ($1, $2, $3)
+            RETURNING id, email
+        `, [email, passwordHash, salt]);
+        const user = rows[0];
+        const token = createToken(user);
+
+        return res.status(201).send({
+            success: true,
+            statusCode: 201,
+            body: { text: 'Usuário cadastrado.', token, user }
         })
+    } catch (error) {
+        if (error.code === '23505') {
+            return res.status(409).send({
+                success: false,
+                statusCode: 409,
+                body: { text: 'Este e-mail já está cadastrado.' }
+            });
         }
+        throw error;
+    }
+}
 
-        const result = await Mongo.db
-        .collection(collectionName)
-        .insertOne({
-            email: req.body.email,
-            password: hashedPassword,
-            salt
-        })
+async function login(req, res) {
+    const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+    const { password } = req.body ?? {};
+    if (typeof password !== 'string' || !email) {
+        return res.status(400).send({
+            success: false,
+            statusCode: 400,
+            body: { text: 'E-mail ou senha incorretos.' }
+        });
+    }
 
-        if(result.insertedId) {
-            const user = await Mongo.db
-            .collection(collectionName)
-            .findOne({_id: new ObjectId(result.insertedId)})
+    const { rows } = await Postgres.query(
+        'SELECT id, email, password_hash, salt FROM users WHERE email = $1',
+        [email]
+    );
+    const storedUser = rows[0];
+    if (!storedUser || !(await verifyPassword(password, storedUser.salt, storedUser.password_hash))) {
+        return res.status(401).send({
+            success: false,
+            statusCode: 401,
+            body: { text: 'E-mail ou senha incorretos.' }
+        });
+    }
 
-            const token = jwt.sign(user , 'secret')
-            
-                return res.send({
-                    success:true,
-                    statusCode:200,
-                    body:{
-                        text:'User registered !',
-                        token,
-                        user,
-                        
-                    }
-                 })
-        }    
-    })
-})
+    const user = { id: storedUser.id, email: storedUser.email };
+    const token = createToken(user);
+    return res.status(200).send({
+        success: true,
+        statusCode: 200,
+        body: { text: 'Login realizado.', user, token }
+    });
+}
 
-authRouter.post("/login",(req , res) => {
-    passport.authenticate('local',(error,user) => {
-        if(error){
-            return res.status(500).send({
-            success:false,
-            statusCode:500,
-            body:{
-                text:'Error during authentication',
-                error
-            }
-        })
-        }
+authRouter.post(['/signup', '/singup'], signup);
+authRouter.post('/login', login);
 
-        if(!user) {
-            return res.status(400).send({
-            success:false,
-            statusCode:400,
-            body:{
-                text:'Credentials are not correctly',
-            }
-        })
-        }
-
-        const token = jwt.sign(user, 'secret')
-
-            return res.status(200).send({
-            success:true,
-            statusCode:200,
-            body:{
-                text:'User logged in correctly!',
-                user,
-                token
-            }
-        })
-    })(req , res)
-})
-
-export default authRouter
+export default authRouter;
