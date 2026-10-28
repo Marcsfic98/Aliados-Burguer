@@ -1,0 +1,14 @@
+.confirmContainer{
+    display: flex;
+    flex-direction: column;
+    gap:1em;
+    padding:5em ;
+    color: var(--txt-color);
+    background-color: var(--black-color);
+    text-align: center;
+}
+
+.confirmBtn{
+    display: flex;
+    gap: 15px;
+}

@@ -1,0 +1,101 @@
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em; 
+}
+
+.bannerSection{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    
+}
+
+
+.bannerImg{
+    background-image: url('/img/main.png');
+    width: 98vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 0 auto;
+}
+
+.bannerTxt{
+    color:var(--txt-color);
+    text-align: center;
+    font-size: 78px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    padding: 0 30px;
+    margin-bottom: 35px;
+}
+
+
+
+.contactSection{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+.socialButtonsContainer{
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+    gap: 0.2em;
+}
+
+.socialButton{
+        width: 100%;  
+    }
+
+
+ .promoSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 55px;
+    margin-bottom: 55px;
+}
+
+.platesLink{
+    color: var(--black-color);
+    text-decoration: none;
+}
+
+.promoSection h2{
+     font-size: 68px;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width:1000px) {
+
+    .bannerTxt{
+        font-size: 32px;
+    }
+
+     .bannerImg{
+   
+        
+    height: 60vh;
+   
+}
+
+    
+}
+
+@media screen and (max-width:768px) {
+    .bannerImg{
+   
+        
+    height: 45vh;
+   
+}
+}

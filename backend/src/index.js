@@ -6,6 +6,8 @@ import authRouter from "./auth/auth.js";
 import usersRouter from "./routes/users.js";
 import cashRouter from "./routes/cash.js";
 import ingredientsRouter from "./routes/ingredients.js";
+import platesRouter from "./routes/plates.js";
+import ordersRouter from "./routes/orders.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -29,6 +31,16 @@ async function main () {
     app.use('/api/cash', cashRouter);
     app.use('/api/ingredients', ingredientsRouter);
     app.use(express.static(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../frontend')));
+    app.use('/plates', platesRouter);
+    app.use('/orders', ordersRouter);
+
+    app.get('/', (req, res) => {
+        res.send({
+            success: true,
+            statusCode: 200,
+            body: 'Bem vindo a Aliados Burguer'
+        });
+    });
 
     app.use((error, req, res, next) => {
         console.error(error);

@@ -83,7 +83,6 @@ async function login(req, res) {
             body: { text: 'E-mail ou senha incorretos.' }
         });
     }
-
     const user = { id: storedUser.id, email: storedUser.email };
     const token = createToken(user);
     return res.status(200).send({

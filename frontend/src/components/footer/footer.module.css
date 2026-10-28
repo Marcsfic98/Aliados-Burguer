@@ -1,0 +1,26 @@
+.footerContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--black-color);
+     color: var(--icons-color);
+}
+
+.footerContainer img{
+    width: 20vh;
+   
+}
+
+.logos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    margin-top: 15px;
+    font-size: 30px;
+}
+
+.logoItem{
+    cursor: pointer;
+}

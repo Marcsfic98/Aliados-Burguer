@@ -1,0 +1,87 @@
+.pageContainer{
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.orderContainer{
+    background-color: var(--black-color);
+    padding: 2em;
+    color: var(--icons-color);
+    border-radius:0.5em ;
+    width: 60%;
+    border: 3px solid var(--icons-color);
+    margin: 35px 0;  
+    position: relative;  
+}
+
+.ordersContainer{
+   display: flex;
+   flex-direction: column;
+   grid-template-columns: repeat(2,1fr);
+   gap: 0.5em;
+   align-items: center;
+   justify-content: center;
+   
+}
+
+.pickupstatus{
+    border-radius: 0.5em;
+    
+    width: fit-content;
+    color: var(--black-color);
+    padding: 6px 10px;
+    margin-bottom: 5px;
+}
+
+.pending{
+    background-color: var(--icons-color);
+}
+
+.canceled{
+    background-color: rgb(236, 66, 19);
+}
+
+.completed{
+    background-color: rgb(29, 183, 29);
+}
+
+.platesLink{
+    color: var(--black-color);
+    text-decoration: none;
+}
+
+.userMain{
+    display: flex;
+    max-width: 1280px;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.infosUser h3{
+    color: aliceblue;
+    font-size: 22px;
+}
+
+.notPlates{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 45px;
+    margin: 35px 0;
+}
+
+.buttons{
+    position: absolute;
+    right: 35px;
+    bottom: 20px;
+    color:#ed4213 ;
+    cursor: pointer;
+    border: #ed4213 3px solid;
+    padding: 8px 18px;
+    border-radius: 12px;
+    display: flex;
+}

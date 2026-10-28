@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Bebas Neue", sans-serif;
+}
+
+main {
+    min-height: 60vh;
+    margin: 0 auto;
+}
+
+:root{
+    --black-color:#0f0f0d ;
+    --icons-color:#b08225;
+    --txt-color: #d1b27d;
+}
+
+#root{
+    font-size: x-large;
+    background-color: #0f0c07;
+    min-height: 100vh;
+    color: var(--txt-color);
+    
+}
+
+button{ 
+    gap: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 10px 14px;
+    border: none;
+    background-color: var(--icons-color);
+    color:var(--black-color);
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+p{
+    display: flex;
+    gap: .2em;
+    align-items: center;
+}
+
