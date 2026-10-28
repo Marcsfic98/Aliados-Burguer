@@ -5,7 +5,7 @@ export default function ordersServices() {
     const [refetchOrders , setRefetchOrders] = useState(true)
     const [ordersList , setOrdersList] = useState([])
 
-    const url = 'http://localhost:3000/orders'
+    const url = `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/orders`
 
     const getUserOrders = (userId) => {
         setOrderLoading(true)

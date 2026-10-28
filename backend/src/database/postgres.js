@@ -1,10 +1,14 @@
 import pg from 'pg';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const { Pool } = pg;
 
 const schema = `
     CREATE TABLE IF NOT EXISTS users (
         id BIGSERIAL PRIMARY KEY,
+        name TEXT NOT NULL DEFAULT '',
         email TEXT NOT NULL UNIQUE,
         password_hash BYTEA NOT NULL,
         salt BYTEA NOT NULL,
@@ -35,6 +39,37 @@ const schema = `
     );
 
     CREATE INDEX IF NOT EXISTS ingredients_name_idx ON ingredients (name);
+
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS name TEXT NOT NULL DEFAULT '';
+
+    CREATE TABLE IF NOT EXISTS plates (
+        id BIGSERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        price NUMERIC(12, 2) NOT NULL CHECK (price >= 0),
+        available BOOLEAN NOT NULL DEFAULT TRUE,
+        description TEXT NOT NULL DEFAULT '',
+        ingredients JSONB NOT NULL DEFAULT '[]'::jsonb,
+        img_url TEXT NOT NULL DEFAULT '',
+        category TEXT NOT NULL DEFAULT ''
+    );
+
+    CREATE TABLE IF NOT EXISTS orders (
+        id BIGSERIAL PRIMARY KEY,
+        user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        pickup_status TEXT NOT NULL DEFAULT 'Pending',
+        pickup_time TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS order_items (
+        id BIGSERIAL PRIMARY KEY,
+        order_id BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+        plate_id BIGINT NOT NULL REFERENCES plates(id) ON DELETE RESTRICT,
+        quantity INTEGER NOT NULL CHECK (quantity > 0)
+    );
+
+    CREATE INDEX IF NOT EXISTS orders_user_id_idx ON orders (user_id);
+    CREATE INDEX IF NOT EXISTS order_items_order_id_idx ON order_items (order_id);
 `;
 
 export const Postgres = {
@@ -53,6 +88,7 @@ export const Postgres = {
         try {
             await pool.query('SELECT 1');
             await pool.query(schema);
+            await seedPlates(pool);
         } catch (error) {
             await pool.end();
             throw error;
@@ -76,3 +112,27 @@ export const Postgres = {
         }
     }
 };
+
+async function seedPlates(pool) {
+    const { rows } = await pool.query('SELECT EXISTS (SELECT 1 FROM plates) AS has_plates');
+    if (rows[0].has_plates) {
+        return;
+    }
+
+    const dataPath = fileURLToPath(new URL('../data/platesData.json', import.meta.url));
+    const plates = JSON.parse(await readFile(path.resolve(dataPath), 'utf8'));
+    for (const plate of plates) {
+        await pool.query(`
+            INSERT INTO plates (name, price, available, description, ingredients, img_url, category)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+        `, [
+            plate.name,
+            plate.price,
+            plate.available,
+            plate.description,
+            JSON.stringify(plate.ingredients ?? []),
+            plate.imgUrl,
+            plate.category
+        ]);
+    }
+}

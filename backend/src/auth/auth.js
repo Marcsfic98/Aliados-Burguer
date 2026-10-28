@@ -24,6 +24,7 @@ function createToken(user) {
 
 async function signup(req, res) {
     const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+    const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
     const { password } = req.body ?? {};
     if (!isValidCredentials(email, password)) {
         return res.status(400).send({
@@ -36,11 +37,12 @@ async function signup(req, res) {
     const { salt, passwordHash } = await hashPassword(password);
     try {
         const { rows } = await Postgres.query(`
-            INSERT INTO users (email, password_hash, salt)
-            VALUES ($1, $2, $3)
-            RETURNING id, email
-        `, [email, passwordHash, salt]);
+            INSERT INTO users (name, email, password_hash, salt)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id::text AS "_id", name, email
+        `, [name, email, passwordHash, salt]);
         const user = rows[0];
+        user.id = user._id;
         const token = createToken(user);
 
         return res.status(201).send({
@@ -72,7 +74,7 @@ async function login(req, res) {
     }
 
     const { rows } = await Postgres.query(
-        'SELECT id, email, password_hash, salt FROM users WHERE email = $1',
+        'SELECT id::text AS "_id", name, email, password_hash, salt FROM users WHERE email = $1',
         [email]
     );
     const storedUser = rows[0];
@@ -83,7 +85,12 @@ async function login(req, res) {
             body: { text: 'E-mail ou senha incorretos.' }
         });
     }
-    const user = { id: storedUser.id, email: storedUser.email };
+    const user = {
+        _id: storedUser._id,
+        id: storedUser._id,
+        name: storedUser.name,
+        email: storedUser.email
+    };
     const token = createToken(user);
     return res.status(200).send({
         success: true,

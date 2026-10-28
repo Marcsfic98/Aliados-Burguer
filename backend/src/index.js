@@ -14,12 +14,7 @@ import { fileURLToPath } from "node:url";
 config()
 
 async function main () {
-    const hostname = 'localhost';
-   const port = process.env.PORT || 3000;
-// ...
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+    const port = process.env.PORT || 3000;
 
     const app = express();
 
@@ -55,7 +50,7 @@ app.listen(port, () => {
     });
 
     app.listen(port,()=>{
-        console.log(`Server running on http://${hostname}:${port}`)
+        console.log(`Server running on port ${port}`)
     })
 }
 

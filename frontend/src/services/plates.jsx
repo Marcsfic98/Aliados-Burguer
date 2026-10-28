@@ -5,7 +5,7 @@ export default function platesServices() {
     const [refetchplates , setRefetchplates] = useState(true)
     const [platesList , setplatesList] = useState([])
 
-    const url = 'http://localhost:3000/plates'
+    const url = `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/plates`
 
     const getAvailableplates = (userId) => {
         setplateLoading(true)
